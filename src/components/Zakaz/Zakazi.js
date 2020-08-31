@@ -1,28 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./index.less";
+import axios from "axios";
 import DetailZakaz from "../DetailZakaz/DetailZakaz";
 
-axios.defaults.baseURL = 'http://localhost:8080/api/';
+const Zakazi = ({ list }) => {
 
-const Zakazi = () => {
-
-  const [list, setList] = useState([]);
   const [listDetail, setListDetail] = useState([]);
   const [zakazId, setZakazId] = useState(null);
-
-  useEffect(() => {
-    getListZakaz();
-  }, [])
-
-  const getListZakaz = async () => {
-    try {
-      const data = await axios.get("order");
-      setList(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   const getZakazById = async (id) => {
     if (id !== zakazId) {
@@ -40,7 +24,7 @@ const Zakazi = () => {
 
   return (
     <ul className="zakazi">
-      {list.map(item => {
+      {list.length > 0 && list.map(item => {
         return (
           <div
             key={item.id}
@@ -53,8 +37,8 @@ const Zakazi = () => {
                 onClick={() => getZakazById(item.id)}
               >
                 <div className="zakazi__toggle-icon">
-                  +
-                  </div>
+                  {zakazId === item.id ? "-" : "+"}
+                </div>
               </div>
               <div className="zakazi__number">
                 {item.docNum}

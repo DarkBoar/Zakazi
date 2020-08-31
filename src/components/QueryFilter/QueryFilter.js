@@ -4,19 +4,22 @@ import axios from "axios";
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
-const QueryFilter = () => {
+const QueryFilter = ({ setList }) => {
 
   const [value, setValue] = useState("");
 
   const textInput = (event) => {
     const text = event.target.value;
-    setTimeout(() => fetchFilterZakaz(text), 1000);
     setValue(text);
+
+    let timerId = setTimeout(() => fetchFilterZakaz(text), 1000);
+    // clearTimeout(timerId);
   }
 
   const fetchFilterZakaz = async (filter) => {
     try {
-      const data = await axios.get("order", { params: { filter } });
+      const { data } = await axios.get("order", { params: { filter } });
+      setList(data)
     } catch (error) {
       console.error(error);
     }
