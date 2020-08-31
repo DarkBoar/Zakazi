@@ -1,39 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import Zakazi from "./components/Zakaz/Zakazi";
 import QueryFilter from "./components/QueryFilter/QueryFilter";
 import "./index.less";
-import axios from "axios";
+import { connect } from "react-redux";
+import { getListZakaz } from "./store/actions/list";
 
-axios.defaults.baseURL = 'http://localhost:8080/api/';
+class App extends Component {
 
-function App() {
-
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    getListZakaz();
-  }, [])
-
-  const getListZakaz = async () => {
-    try {
-      const data = await axios.get("order");
-      setList(data.data);
-    } catch (error) {
-      console.error(error);
-    }
+  componentDidMount() {
+    this.props.getListZakaz();
   }
 
-  return (
-    <div className="container">
-      <QueryFilter
-        setList={setList}
-      />
-      <Zakazi
-        list={list}
-        setList={setList}
-      />
-    </div>
-  );
+  render() {
+    return (
+      <div className="container">
+        <QueryFilter />
+        <Zakazi list={this.props.data} />
+      </div>
+    );
+  }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    data: state.list.data
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    getListZakaz: () => dispatch(getListZakaz()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// function App() {
+
+//   const [list, setList] = useState([]);
+
+//   useEffect(() => {
+//     getListZakaz();
+//   }, [])
+
+//   const getListZakaz = async () => {
+//     try {
+//       const data = await axios.get("order");
+//       setList(data.data);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+
+//   return (
+//     <div className="container">
+//       <QueryFilter
+//         setList={setList}
+//       />
+//       <Zakazi
+//         list={list}
+//         setList={setList}
+//       />
+//     </div>
+//   );
+// }
+
+// export default App;
