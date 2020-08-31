@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import "./index.less";
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://localhost:8080/api/';
-
 const QueryFilter = ({ setList }) => {
 
   const [value, setValue] = useState("");
+  const [timerId, setTimerId] = useState("");
+
 
   const textInput = (event) => {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
     const text = event.target.value;
     setValue(text);
 
-    let timerId = setTimeout(() => fetchFilterZakaz(text), 1000);
-    // clearTimeout(timerId);
+    setTimerId(setTimeout(() => fetchFilterZakaz(text), 1000))
   }
 
   const fetchFilterZakaz = async (filter) => {

@@ -7,6 +7,7 @@ import axios from "axios";
 axios.defaults.baseURL = 'http://localhost:8080/api/';
 
 function App() {
+
   const [list, setList] = useState([]);
 
   useEffect(() => {
