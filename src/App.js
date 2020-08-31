@@ -1,9 +1,10 @@
 import React from "react";
+import Zakazi from "./components/Zakaz/Zakazi";
 
 function App() {
   return (
     <div>
-      Hello world!
+      <Zakazi />
     </div>
   );
 }
