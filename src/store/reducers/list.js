@@ -1,7 +1,9 @@
-import { FETCH_LIST_SUCCESS, FETCH_FILTER_SUCCESS } from "../actions/actionTypes";
+import { FETCH_LIST_SUCCESS, FETCH_FILTER_SUCCESS, FETCH_ID_SUCCESS, FETCH_ID_NULL } from "../actions/actionTypes";
 
 const initialState = {
   data: [],
+  listDetail: [],
+  zakazId: null
 }
 
 export default function listReducer(state = initialState, action) {
@@ -15,6 +17,17 @@ export default function listReducer(state = initialState, action) {
       return {
         ...state,
         data: action.data
+      };
+    case FETCH_ID_SUCCESS:
+      return {
+        ...state,
+        listDetail: action.listDetail,
+        zakazId: action.zakazId
+      };
+    case FETCH_ID_NULL:
+      return {
+        ...state,
+        zakazId: null
       };
     default:
       return state;

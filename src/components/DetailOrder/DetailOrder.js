@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DetailZakaz = ({ listDetail }) => {
+const DetailOrder = ({ listDetail }) => {
   return (
     <div className="zakaz-detail">
       <ul>
-        {listDetail.length !== 0 && listDetail.map(item => {
+        {listDetail.map(item => {
           return (
             <li
               key={item.id}
@@ -30,4 +30,4 @@ const DetailZakaz = ({ listDetail }) => {
   );
 };
 
-export default DetailZakaz;
+export default DetailOrder;

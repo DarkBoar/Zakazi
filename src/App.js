@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Zakazi from "./components/Zakaz/Zakazi";
+import Orders from "./components/Orders/Orders";
 import QueryFilter from "./components/QueryFilter/QueryFilter";
 import "./index.less";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <div className="container">
         <QueryFilter />
-        <Zakazi list={this.props.data} />
+        <Orders list={this.props.data} />
       </div>
     );
   }
