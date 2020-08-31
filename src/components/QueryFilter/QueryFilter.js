@@ -1,41 +1,52 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import "./index.less";
-import axios from "axios";
+import { connect } from "react-redux";
+import { getFilterList } from "../../store/actions/list";
 
-const QueryFilter = ({ setList }) => {
+class QueryFilter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      timerId: null
+    }
+  }
 
-  const [value, setValue] = useState("");
-  const [timerId, setTimerId] = useState("");
-
-
-  const textInput = (event) => {
-    if (timerId) {
-      clearTimeout(timerId);
+  textInput(event) {
+    if (this.state.timerId) {
+      clearTimeout(this.state.timerId);
     }
     const text = event.target.value;
-    setValue(text);
 
-    setTimerId(setTimeout(() => fetchFilterZakaz(text), 1000))
+    this.setState({
+      value: event.target.value,
+      timerId: setTimeout(() => this.props.getFilterList(text), 1000)
+    })
   }
 
-  const fetchFilterZakaz = async (filter) => {
-    try {
-      const { data } = await axios.get("order", { params: { filter } });
-      setList(data)
-    } catch (error) {
-      console.error(error);
-    }
+  render() {
+    return (
+      <div className="filter">
+        <div className="filter__title">Заказы</div>
+        <input
+          value={this.state.value}
+          onChange={(e) => this.textInput(e)}
+        />
+      </div>
+    );
   }
+}
 
-  return (
-    <div className="filter">
-      <div className="filter__title">Заказы</div>
-      <input
-        value={value}
-        onChange={(e) => textInput(e)}
-      />
-    </div>
-  );
-};
+function mapStateToProps(state) {
+  return {
+    data: state.list.data
+  }
+}
 
-export default QueryFilter;
+function mapDispatchToProps(dispatch) {
+  return {
+    getFilterList: (filter) => dispatch(getFilterList(filter)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QueryFilter);

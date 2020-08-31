@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./index.less";
 import axios from "axios";
 import DetailZakaz from "../DetailZakaz/DetailZakaz";
@@ -8,7 +8,7 @@ const Zakazi = ({ list }) => {
   const [listDetail, setListDetail] = useState([]);
   const [zakazId, setZakazId] = useState(null);
 
-  const getZakazById = async (id) => {
+  const getZakazById = async (id, zakazId) => {
     if (id !== zakazId) {
       try {
         const data = await axios.get(`order/${id}`);
@@ -34,7 +34,7 @@ const Zakazi = ({ list }) => {
             >
               <div
                 className="zakazi__toggle"
-                onClick={() => getZakazById(item.id)}
+                onClick={() => getZakazById(item.id, zakazId)}
               >
                 <div className="zakazi__toggle-icon">
                   {zakazId === item.id ? "-" : "+"}

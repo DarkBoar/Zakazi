@@ -1,4 +1,4 @@
-import { FETCH_LIST_SUCCESS } from "../actions/actionTypes";
+import { FETCH_LIST_SUCCESS, FETCH_FILTER_SUCCESS } from "../actions/actionTypes";
 
 const initialState = {
   data: [],
@@ -7,6 +7,11 @@ const initialState = {
 export default function listReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_LIST_SUCCESS:
+      return {
+        ...state,
+        data: action.data
+      };
+    case FETCH_FILTER_SUCCESS:
       return {
         ...state,
         data: action.data
